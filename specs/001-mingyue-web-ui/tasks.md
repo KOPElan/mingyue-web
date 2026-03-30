@@ -29,18 +29,18 @@
 
 **独立验证**：`npm run dev` 可启动，`npm run test` 覆盖率命令可运行（无实际测试也应输出 0%），`npm run build` 无报错。
 
-- [ ] T001 使用 `npm create vue@latest` 初始化项目（选择 TypeScript、Vue Router、Pinia、ESLint），并提交初始结构
-- [ ] T002 [P] 配置 tsconfig.json：`strict: true`，`paths` 别名 `@/` → `src/`，`moduleResolution: bundler`
-- [ ] T003 [P] 安装并配置 Tailwind CSS v4，在 tailwind.config.ts 中定义 Design Token CSS 变量（颜色、字体、间距）
-- [ ] T004 [P] 安装运行时依赖：`axios`、`@vueuse/core`、`@tanstack/vue-virtual`
-- [ ] T005 [P] 安装开发依赖：`vitest`、`@vitest/coverage-v8`、`@vue/test-utils`、`msw`、`@playwright/test`
-- [ ] T006 [P] 配置 ESLint（eslint.config.js）和 Prettier（.prettierrc），强制中文注释关键路径规范
-- [ ] T007 [P] 配置 vite.config.ts：路由级代码分割、build rollupOptions、`@` 别名
-- [ ] T008 [P] 配置 Vitest 覆盖率门禁：全局 `branches/functions/lines ≥ 80%`，`src/api/**` ≥ 90% 在 vite.config.ts 中
-- [ ] T009 [P] 创建 Bundle 体积检查脚本 scripts/check-bundle-size.js（gzip 后 ≤ 300KB 否则 exit 1）
-- [ ] T010 [P] 配置 Playwright：playwright.config.ts（baseURL、浏览器矩阵 Chromium/Firefox/WebKit）
-- [ ] T011 [P] 初始化 MSW ServiceWorker：运行 `npx msw init public/`，生成 `public/mockServiceWorker.js`
-- [ ] T012 [P] 创建 src/ 完整目录骨架（api/, components/common|agent|layout/, composables/, pages/所有子目录, router/, stores/, types/, utils/）
+- [X] T001 使用 `npm create vue@latest` 初始化项目（选择 TypeScript、Vue Router、Pinia、ESLint），并提交初始结构
+- [X] T002 [P] 配置 tsconfig.json：`strict: true`，`paths` 别名 `@/` → `src/`，`moduleResolution: bundler`
+- [X] T003 [P] 安装并配置 Tailwind CSS v4，在 tailwind.config.ts 中定义 Design Token CSS 变量（颜色、字体、间距）
+- [X] T004 [P] 安装运行时依赖：`axios`、`@vueuse/core`、`@tanstack/vue-virtual`
+- [X] T005 [P] 安装开发依赖：`vitest`、`@vitest/coverage-v8`、`@vue/test-utils`、`msw`、`@playwright/test`
+- [X] T006 [P] 配置 ESLint（eslint.config.js）和 Prettier（.prettierrc），强制中文注释关键路径规范
+- [X] T007 [P] 配置 vite.config.ts：路由级代码分割、build rollupOptions、`@` 别名
+- [X] T008 [P] 配置 Vitest 覆盖率门禁：全局 `branches/functions/lines ≥ 80%`，`src/api/**` ≥ 90% 在 vite.config.ts 中
+- [X] T009 [P] 创建 Bundle 体积检查脚本 scripts/check-bundle-size.js（gzip 后 ≤ 300KB 否则 exit 1）
+- [X] T010 [P] 配置 Playwright：playwright.config.ts（baseURL、浏览器矩阵 Chromium/Firefox/WebKit）
+- [X] T011 [P] 初始化 MSW ServiceWorker：运行 `npx msw init public/`，生成 `public/mockServiceWorker.js`
+- [X] T012 [P] 创建 src/ 完整目录骨架（api/, components/common|agent|layout/, composables/, pages/所有子目录, router/, stores/, types/, utils/）
 
 **Checkpoint**：`npm run dev`、`npm run build`、`npm run test --run` 均无报错。
 
@@ -56,34 +56,34 @@
 
 ### 基础设施测试（宪法原则 II：MANDATORY，先于实现）
 
-- [ ] T013 [P] 创建 MSW API 模拟处理器（health、system、processes、disks、files、smb、nfs、network、acl 全部端点）在 tests/mocks/handlers.ts
-- [ ] T014 [P] 编写 src/utils/base64.ts 的单元测试（encodeBase64/decodeBase64 正确性、空字符串、边界值）在 tests/unit/base64.test.ts
-- [ ] T015 [P] 编写 src/utils/encoding.ts 的单元测试（encodeMountPath 路径含空格/斜杠/中文）在 tests/unit/encoding.test.ts
-- [ ] T016 [P] 编写 src/api/client.ts 的单元测试（Bearer Token 注入、6 种错误码中文映射、MingyueApiError 实例化）在 tests/unit/api-client.test.ts
+- [X] T013 [P] 创建 MSW API 模拟处理器（health、system、processes、disks、files、smb、nfs、network、acl 全部端点）在 tests/mocks/handlers.ts
+- [X] T014 [P] 编写 src/utils/base64.ts 的单元测试（encodeBase64/decodeBase64 正确性、空字符串、边界值）在 tests/unit/base64.test.ts
+- [X] T015 [P] 编写 src/utils/encoding.ts 的单元测试（encodeMountPath 路径含空格/斜杠/中文）在 tests/unit/encoding.test.ts
+- [X] T016 [P] 编写 src/api/client.ts 的单元测试（Bearer Token 注入、6 种错误码中文映射、MingyueApiError 实例化）在 tests/unit/api-client.test.ts
 
 ### 基础设施实现
 
-- [ ] T017 [P] 定义所有 14 个 TypeScript 实体类型（AgentConfig、SystemOverview、Process、DiskDevice、MountPoint、SmartHealth、FileEntry、FileContent、WriteFileRequest、SmbShare、SmbUser、NfsExport、NetworkInterface、AclInfo/AclEntry）在 src/types/index.ts
-- [ ] T018 [P] 创建 src/utils/base64.ts：`encodeBase64(text: string): string`（btoa 安全封装）和 `decodeBase64(encoded: string): string`（atob 安全封装）
-- [ ] T019 [P] 创建 src/utils/encoding.ts：`encodeMountPath(path: string): string`（encodeURIComponent 路径工具）
-- [ ] T020 [P] 创建 src/utils/constants.ts：轮询间隔（POLLING_INTERVAL = 5000）、文件预览大小限制（FILE_PREVIEW_LIMIT = 1MB）、ACL 格式正则、错误码→中文消息映射
-- [ ] T021 创建 src/api/client.ts：Axios 基础实例工厂 `createMingyueClient(baseUrl, apiKey)`，Bearer Token 拦截器，响应错误拦截器（UNAUTHORIZED/FORBIDDEN/NOT_FOUND/INVALID_INPUT/CONFLICT/INTERNAL → MingyueApiError），MingyueApiError 类定义
-- [ ] T022 [P] 创建 src/stores/agents.ts：Pinia store，字段：agents 列表、activeAgentId、健康状态 map，Actions：addAgent、removeAgent、setActiveAgent、updateHealthStatus
-- [ ] T023 [P] 创建 src/stores/auth.ts：Pinia store，Actions：saveApiKey（含受信任设备 flag 写 localStorage）、loadApiKey、clearApiKey、isTrustedDevice 判断
-- [ ] T024 [P] 创建 src/stores/ui.ts：Pinia store，字段：globalLoading、toast 通知队列，Actions：showToast、hideToast（success/error/warn 三种类型）
-- [ ] T025 配置 src/router/index.ts：8 个页面路由（settings、dashboard、processes、disks、files、shares、network、acl），全部使用 `() => import()` 动态懒加载，未配置 agent 时重定向到 settings
-- [ ] T026 [P] 创建 src/components/common/ConfirmDialog.vue：可复用确认模态框（title、message、confirmText、cancelText props，confirm/cancel emits，Escape 键关闭，Enter 键确认）
-- [ ] T027 [P] 创建 src/components/common/SkeletonList.vue：骨架屏占位（rows prop，支持单行和多列变体）
-- [ ] T028 [P] 创建 src/components/common/EmptyState.vue：空状态组件（icon slot、中文描述 message prop、action slot）
-- [ ] T029 [P] 创建 src/components/common/StatusBadge.vue：状态标签（`online`/`offline`/`warning`/`error` 变体，对应中文文案）
-- [ ] T030 [P] 创建 src/components/layout/AppLayout.vue：主布局（Sidebar + TopBar + 内容区 router-view）
-- [ ] T031 [P] 创建 src/components/layout/Sidebar.vue：侧边导航（仪表板/进程/磁盘/文件/共享/网络/ACL/设置，角色感知菜单项禁用）
-- [ ] T032 [P] 创建 src/components/layout/TopBar.vue：顶部栏（agent 切换器占位、全局 loading 指示器）
-- [ ] T033 [P] 创建 src/composables/usePolling.ts：基于 `useDocumentVisibility` + `useIntervalFn`（VueUse），标签页不可见时暂停，返回 `{ start, stop, isPolling }`
-- [ ] T034 [P] 创建 src/composables/useAgent.ts：从 activeAgent store 获取当前 `{ baseUrl, apiKey }`，并创建 MingyueClient 实例
-- [ ] T035 [P] 创建 src/composables/useConfirm.ts：调用 ConfirmDialog 的 Composable，返回 Promise-based `confirm(options)` 方法
-- [ ] T036 [P] 创建 src/composables/useRole.ts：从 activeAgent 的 API Key 角色推断，返回 `{ isViewer, isOperator, isAdmin, canWrite, canManageNetwork }`
-- [ ] T037 配置 src/main.ts：创建 Vue app，注册 Pinia、Vue Router，挂载 `#app`
+- [X] T017 [P] 定义所有 14 个 TypeScript 实体类型（AgentConfig、SystemOverview、Process、DiskDevice、MountPoint、SmartHealth、FileEntry、FileContent、WriteFileRequest、SmbShare、SmbUser、NfsExport、NetworkInterface、AclInfo/AclEntry）在 src/types/index.ts
+- [X] T018 [P] 创建 src/utils/base64.ts：`encodeBase64(text: string): string`（btoa 安全封装）和 `decodeBase64(encoded: string): string`（atob 安全封装）
+- [X] T019 [P] 创建 src/utils/encoding.ts：`encodeMountPath(path: string): string`（encodeURIComponent 路径工具）
+- [X] T020 [P] 创建 src/utils/constants.ts：轮询间隔（POLLING_INTERVAL = 5000）、文件预览大小限制（FILE_PREVIEW_LIMIT = 1MB）、ACL 格式正则、错误码→中文消息映射
+- [X] T021 创建 src/api/client.ts：Axios 基础实例工厂 `createMingyueClient(baseUrl, apiKey)`，Bearer Token 拦截器，响应错误拦截器（UNAUTHORIZED/FORBIDDEN/NOT_FOUND/INVALID_INPUT/CONFLICT/INTERNAL → MingyueApiError），MingyueApiError 类定义
+- [X] T022 [P] 创建 src/stores/agents.ts：Pinia store，字段：agents 列表、activeAgentId、健康状态 map，Actions：addAgent、removeAgent、setActiveAgent、updateHealthStatus
+- [X] T023 [P] 创建 src/stores/auth.ts：Pinia store，Actions：saveApiKey（含受信任设备 flag 写 localStorage）、loadApiKey、clearApiKey、isTrustedDevice 判断
+- [X] T024 [P] 创建 src/stores/ui.ts：Pinia store，字段：globalLoading、toast 通知队列，Actions：showToast、hideToast（success/error/warn 三种类型）
+- [X] T025 配置 src/router/index.ts：8 个页面路由（settings、dashboard、processes、disks、files、shares、network、acl），全部使用 `() => import()` 动态懒加载，未配置 agent 时重定向到 settings
+- [X] T026 [P] 创建 src/components/common/ConfirmDialog.vue：可复用确认模态框（title、message、confirmText、cancelText props，confirm/cancel emits，Escape 键关闭，Enter 键确认）
+- [X] T027 [P] 创建 src/components/common/SkeletonList.vue：骨架屏占位（rows prop，支持单行和多列变体）
+- [X] T028 [P] 创建 src/components/common/EmptyState.vue：空状态组件（icon slot、中文描述 message prop、action slot）
+- [X] T029 [P] 创建 src/components/common/StatusBadge.vue：状态标签（`online`/`offline`/`warning`/`error` 变体，对应中文文案）
+- [X] T030 [P] 创建 src/components/layout/AppLayout.vue：主布局（Sidebar + TopBar + 内容区 router-view）
+- [X] T031 [P] 创建 src/components/layout/Sidebar.vue：侧边导航（仪表板/进程/磁盘/文件/共享/网络/ACL/设置，角色感知菜单项禁用）
+- [X] T032 [P] 创建 src/components/layout/TopBar.vue：顶部栏（agent 切换器占位、全局 loading 指示器）
+- [X] T033 [P] 创建 src/composables/usePolling.ts：基于 `useDocumentVisibility` + `useIntervalFn`（VueUse），标签页不可见时暂停，返回 `{ start, stop, isPolling }`
+- [X] T034 [P] 创建 src/composables/useAgent.ts：从 activeAgent store 获取当前 `{ baseUrl, apiKey }`，并创建 MingyueClient 实例
+- [X] T035 [P] 创建 src/composables/useConfirm.ts：调用 ConfirmDialog 的 Composable，返回 Promise-based `confirm(options)` 方法
+- [X] T036 [P] 创建 src/composables/useRole.ts：从 activeAgent 的 API Key 角色推断，返回 `{ isViewer, isOperator, isAdmin, canWrite, canManageNetwork }`
+- [X] T037 配置 src/main.ts：创建 Vue app，注册 Pinia、Vue Router，挂载 `#app`
 
 **Checkpoint**：`npm run test` 通过 T014~T016 的单元测试；路由从 `/` 可跳转到所有已创建的空页面；公共组件可正常渲染。
 
@@ -104,16 +104,16 @@
 
 ### 用户故事 1 实现
 
-- [ ] T042 [US1] 创建 src/api/system.ts：`getSystemOverview(client): Promise<SystemOverview>`（GET /system/overview），`checkHealth(baseUrl): Promise<boolean>`（GET /health，无 Token）
-- [ ] T043 [P] [US1] 创建 src/pages/settings/SettingsPage.vue：单 Agent 配置页布局，引入 AgentForm，成功连接后 router.push('/dashboard')
-- [ ] T044 [US1] 创建 src/components/agent/AgentForm.vue：地址输入框 + API Key 密码框 + "受信任设备确认" ConfirmDialog（含风险说明文案），调用 auth store 的 saveApiKey
-- [ ] T045 [US1] 创建 src/pages/dashboard/DashboardPage.vue：四卡片布局，onMounted 初始加载，usePolling（5s）驱动数据刷新，连接失败显示中文错误提示
-- [ ] T046 [P] [US1] 创建 src/pages/dashboard/CpuCard.vue：展示 CPU 使用率百分比 + 进度条，加载中显示 SkeletonList
-- [ ] T047 [P] [US1] 创建 src/pages/dashboard/MemoryCard.vue：展示内存已用/总量/使用率，加载中显示 SkeletonList
-- [ ] T048 [P] [US1] 创建 src/pages/dashboard/UptimeCard.vue：展示系统运行时间（自动格式化为天/时/分），加载中显示 SkeletonList
-- [ ] T049 [P] [US1] 创建 src/pages/dashboard/DiskUsageCard.vue：展示磁盘整体使用情况概览，加载中显示 SkeletonList
-- [ ] T050 [US1] 在 DashboardPage 中连接 usePolling（interval=5000, 使用 useDocumentVisibility 自动暂停），useRole 驱动写操作入口的禁用状态
-- [ ] T051 [US1] 实现连接失败中文错误处理：agent 不可达显示"无法连接到 agent，请检查地址或服务状态"；401 跳转 settings；403 显示权限提示
+- [X] T042 [US1] 创建 src/api/system.ts：`getSystemOverview(client): Promise<SystemOverview>`（GET /system/overview），`checkHealth(baseUrl): Promise<boolean>`（GET /health，无 Token）
+- [X] T043 [P] [US1] 创建 src/pages/settings/SettingsPage.vue：单 Agent 配置页布局，引入 AgentForm，成功连接后 router.push('/dashboard')
+- [X] T044 [US1] 创建 src/components/agent/AgentForm.vue：地址输入框 + API Key 密码框 + "受信任设备确认" ConfirmDialog（含风险说明文案），调用 auth store 的 saveApiKey
+- [X] T045 [US1] 创建 src/pages/dashboard/DashboardPage.vue：四卡片布局，onMounted 初始加载，usePolling（5s）驱动数据刷新，连接失败显示中文错误提示
+- [X] T046 [P] [US1] 创建 src/pages/dashboard/CpuCard.vue：展示 CPU 使用率百分比 + 进度条，加载中显示 SkeletonList
+- [X] T047 [P] [US1] 创建 src/pages/dashboard/MemoryCard.vue：展示内存已用/总量/使用率，加载中显示 SkeletonList
+- [X] T048 [P] [US1] 创建 src/pages/dashboard/UptimeCard.vue：展示系统运行时间（自动格式化为天/时/分），加载中显示 SkeletonList
+- [X] T049 [P] [US1] 创建 src/pages/dashboard/DiskUsageCard.vue：展示磁盘整体使用情况概览，加载中显示 SkeletonList
+- [X] T050 [US1] 在 DashboardPage 中连接 usePolling（interval=5000, 使用 useDocumentVisibility 自动暂停），useRole 驱动写操作入口的禁用状态
+- [X] T051 [US1] 实现连接失败中文错误处理：agent 不可达显示"无法连接到 agent，请检查地址或服务状态"；401 跳转 settings；403 显示权限提示
 
 **Checkpoint（MVP）**：至此 US1 可独立交付 demo：设置页配置 → 仪表板显示实时数据 → viewer 角色所有写操作按钮禁用。
 
@@ -133,12 +133,12 @@
 
 ### 用户故事 2 实现
 
-- [ ] T055 [US2] 创建 src/api/processes.ts：`listProcesses(client): Promise<Process[]>`（GET /processes），`killProcess(client, pid): Promise<void>`（DELETE /processes/{pid}）
-- [ ] T056 [P] [US2] 创建 src/pages/processes/ProcessesPage.vue：布局（搜索栏 + ProcessTable），onMounted 加载全量进程，终止后触发 2s 内刷新
-- [ ] T057 [US2] 在 ProcessesPage 中实现客户端过滤：`computed filteredProcesses` 基于 searchKeyword 过滤 name/command，不触发额外 API 请求
-- [ ] T058 [US2] 在 ProcessesPage 中实现终止进程：调用 useConfirm（"确认终止进程 [name]（PID: [pid]）？此操作不可撤销。"），确认后 callAPI，成功后刷新列表
-- [ ] T059 [P] [US2] 创建 src/pages/processes/ProcessTable.vue：使用 `@tanstack/vue-virtual` 虚拟滚动，列：PID、进程名、状态、CPU%、内存 RSS、用户名、操作；useRole 控制终止按钮禁用（viewer 鼠标悬停提示"需要 operator 或 admin 角色"）
-- [ ] T060 [P] [US2] 在 ProcessesPage 中实现分页逻辑：默认每页 20 条，支持切换每页数量，无结果时显示 EmptyState（"未找到匹配的进程"）
+- [X] T055 [US2] 创建 src/api/processes.ts：`listProcesses(client): Promise<Process[]>`（GET /processes），`killProcess(client, pid): Promise<void>`（DELETE /processes/{pid}）
+- [X] T056 [P] [US2] 创建 src/pages/processes/ProcessesPage.vue：布局（搜索栏 + ProcessTable），onMounted 加载全量进程，终止后触发 2s 内刷新
+- [X] T057 [US2] 在 ProcessesPage 中实现客户端过滤：`computed filteredProcesses` 基于 searchKeyword 过滤 name/command，不触发额外 API 请求
+- [X] T058 [US2] 在 ProcessesPage 中实现终止进程：调用 useConfirm（"确认终止进程 [name]（PID: [pid]）？此操作不可撤销。"），确认后 callAPI，成功后刷新列表
+- [X] T059 [P] [US2] 创建 src/pages/processes/ProcessTable.vue：使用 `@tanstack/vue-virtual` 虚拟滚动，列：PID、进程名、状态、CPU%、内存 RSS、用户名、操作；useRole 控制终止按钮禁用（viewer 鼠标悬停提示"需要 operator 或 admin 角色"）
+- [X] T060 [P] [US2] 在 ProcessesPage 中实现分页逻辑：默认每页 20 条，支持切换每页数量，无结果时显示 EmptyState（"未找到匹配的进程"）
 
 **Checkpoint**：US1 + US2 均可独立工作，进程列表功能完整。
 
@@ -159,12 +159,12 @@
 
 ### 用户故事 3 实现
 
-- [ ] T065 [US3] 创建 src/api/disks.ts：`listDevices`（GET /disks/devices）、`listMounts`（GET /disks/mounts）、`createMount`（POST /disks/mounts）、`deleteMount`（DELETE /disks/mounts/{encodeMountPath(path)}）、`getSmartHealth`（GET /disks/{device}/smart）、`getPowerState`（GET /disks/{device}/power）
-- [ ] T066 [P] [US3] 创建 src/pages/disks/DisksPage.vue：两标签布局（"块设备" + "挂载点"），各标签独立加载，加载中显示 SkeletonList
-- [ ] T067 [P] [US3] 创建 src/pages/disks/DiskDeviceList.vue：设备名、大小、类型、型号列表，含"SMART 健康"按钮（展开 SmartHealthPanel）
-- [ ] T068 [P] [US3] 创建 src/pages/disks/MountPointList.vue：设备路径、挂载目标、文件系统类型列表，含"卸载"按钮（调用 useConfirm）
-- [ ] T069 [US3] 创建 src/pages/disks/MountForm.vue：挂载类型选择（本地/CIFS/NFS），CIFS 密码字段 `type="password"`，表单提交后在 `@submit` 回调中立即执行 `cisfsPassword = ''` 清除凭据，组件不持久化密码
-- [ ] T070 [P] [US3] 创建 src/pages/disks/SmartHealthPanel.vue：健康状态（健康/警告/危险）、温度、通电时间；API 返回 404 或未安装 smartmontools 时展示降级提示"设备未支持 SMART 查询"，不报错
+- [X] T065 [US3] 创建 src/api/disks.ts：`listDevices`（GET /disks/devices）、`listMounts`（GET /disks/mounts）、`createMount`（POST /disks/mounts）、`deleteMount`（DELETE /disks/mounts/{encodeMountPath(path)}）、`getSmartHealth`（GET /disks/{device}/smart）、`getPowerState`（GET /disks/{device}/power）
+- [X] T066 [P] [US3] 创建 src/pages/disks/DisksPage.vue：两标签布局（"块设备" + "挂载点"），各标签独立加载，加载中显示 SkeletonList
+- [X] T067 [P] [US3] 创建 src/pages/disks/DiskDeviceList.vue：设备名、大小、类型、型号列表，含"SMART 健康"按钮（展开 SmartHealthPanel）
+- [X] T068 [P] [US3] 创建 src/pages/disks/MountPointList.vue：设备路径、挂载目标、文件系统类型列表，含"卸载"按钮（调用 useConfirm）
+- [X] T069 [US3] 创建 src/pages/disks/MountForm.vue：挂载类型选择（本地/CIFS/NFS），CIFS 密码字段 `type="password"`，表单提交后在 `@submit` 回调中立即执行 `cisfsPassword = ''` 清除凭据，组件不持久化密码
+- [X] T070 [P] [US3] 创建 src/pages/disks/SmartHealthPanel.vue：健康状态（健康/警告/危险）、温度、通电时间；API 返回 404 或未安装 smartmontools 时展示降级提示"设备未支持 SMART 查询"，不报错
 
 **Checkpoint**：US1 + US2 + US3 均可独立工作，磁盘管理功能完整；CIFS 凭据安全验证通过。
 
@@ -185,15 +185,15 @@
 
 ### 用户故事 4 实现
 
-- [ ] T075 [US4] 创建 src/api/files.ts：`listFiles`（GET /files?path=）、`statFile`（GET /files/stat?path=）、`readFile`（GET /files/read?path= + decodeBase64）、`writeFile`（POST /files + encodeBase64）、`moveFile`（PUT /files/move）、`copyFile`（PUT /files/copy）、`deleteFile`（DELETE /files）
-- [ ] T076 [P] [US4] 创建 src/pages/files/FilesPage.vue：左右双栏 `<resizable-layout>`，左侧 DirectoryTree，右侧 FileList + FileViewer，加载中各区域独立显示 SkeletonList
-- [ ] T077 [P] [US4] 创建 src/pages/files/DirectoryTree.vue：递归展开目录树，从 `/` 开始，点击展开/折叠，当前选中路径高亮
-- [ ] T078 [P] [US4] 创建 src/pages/files/FileList.vue：名称、类型（图标区分 file/dir/symlink）、大小（格式化）、修改时间、权限位，点击文件触发 `select` emit
-- [ ] T079 [US4] 创建 src/pages/files/FileViewer.vue：文件大小 ≤ 1MB 时调用 readFile + decodeBase64 展示文本，支持编辑；> 1MB 时显示"文件过大，仅支持下载"并提供下载链接
-- [ ] T080 [US4] 在 FileViewer 中实现文件保存：内容 encodeBase64 后调用 writeFile，成功显示 ui store 的 success toast，失败显示 error toast
-- [ ] T081 [US4] 在 FilesPage 中实现拖拽移动：监听 dragstart/drop 事件，源路径 ≠ 目标路径时调用 moveFile，操作完成后刷新目录树和文件列表
-- [ ] T082 [P] [US4] 在 FilesPage 中实现删除操作：调用 useConfirm（"确认删除 [path]？目录删除将递归删除所有内容，不可恢复。"），确认后调用 deleteFile
-- [ ] T083 [P] [US4] 在 FilesPage 工具栏添加"上传文件"占位按钮（`disabled`，`title="上传功能将在后续版本支持（需服务端 multipart 接口）"`）
+- [X] T075 [US4] 创建 src/api/files.ts：`listFiles`（GET /files?path=）、`statFile`（GET /files/stat?path=）、`readFile`（GET /files/read?path= + decodeBase64）、`writeFile`（POST /files + encodeBase64）、`moveFile`（PUT /files/move）、`copyFile`（PUT /files/copy）、`deleteFile`（DELETE /files）
+- [X] T076 [P] [US4] 创建 src/pages/files/FilesPage.vue：左右双栏 `<resizable-layout>`，左侧 DirectoryTree，右侧 FileList + FileViewer，加载中各区域独立显示 SkeletonList
+- [X] T077 [P] [US4] 创建 src/pages/files/DirectoryTree.vue：递归展开目录树，从 `/` 开始，点击展开/折叠，当前选中路径高亮
+- [X] T078 [P] [US4] 创建 src/pages/files/FileList.vue：名称、类型（图标区分 file/dir/symlink）、大小（格式化）、修改时间、权限位，点击文件触发 `select` emit
+- [X] T079 [US4] 创建 src/pages/files/FileViewer.vue：文件大小 ≤ 1MB 时调用 readFile + decodeBase64 展示文本，支持编辑；> 1MB 时显示"文件过大，仅支持下载"并提供下载链接
+- [X] T080 [US4] 在 FileViewer 中实现文件保存：内容 encodeBase64 后调用 writeFile，成功显示 ui store 的 success toast，失败显示 error toast
+- [X] T081 [US4] 在 FilesPage 中实现拖拽移动：监听 dragstart/drop 事件，源路径 ≠ 目标路径时调用 moveFile，操作完成后刷新目录树和文件列表
+- [X] T082 [P] [US4] 在 FilesPage 中实现删除操作：调用 useConfirm（"确认删除 [path]？目录删除将递归删除所有内容，不可恢复。"），确认后调用 deleteFile
+- [X] T083 [P] [US4] 在 FilesPage 工具栏添加"上传文件"占位按钮（`disabled`，`title="上传功能将在后续版本支持（需服务端 multipart 接口）"`）
 
 **Checkpoint**：US1~US4 均可独立工作，文件管理器功能完整；Base64 编解码验证通过。
 
@@ -214,13 +214,13 @@
 
 ### 用户故事 5 实现
 
-- [ ] T088 [US5] 创建 src/api/smb.ts：`listShares`、`createShare`（POST /smb/shares）、`updateShare`（PUT /smb/shares/{name}）、`deleteShare`（DELETE /smb/shares/{name}）、`listUsers`（GET /smb/users）、`createUser`（POST /smb/users）、`updateUserPassword`（PUT /smb/users/{username}/password）、`deleteUser`（DELETE /smb/users/{username}）
-- [ ] T089 [P] [US5] 创建 src/api/nfs.ts：`listExports`、`createExport`（POST /nfs/exports）、`updateExport`（PUT /nfs/exports/{name}）、`deleteExport`（DELETE /nfs/exports/{name}）
-- [ ] T090 [P] [US5] 创建 src/pages/shares/SharesPage.vue：SMB/NFS 两标签布局，各自独立加载，加载中显示 SkeletonList，空时显示 EmptyState
-- [ ] T091 [P] [US5] 创建 src/pages/shares/SmbShareList.vue：名称、路径、启用状态（StatusBadge）、只读/读写标记，含编辑/删除 action
-- [ ] T092 [P] [US5] 创建 src/pages/shares/NfsExportList.vue：导出名称、路径、客户端配置、启用状态，含编辑/删除 action
-- [ ] T093 [US5] 创建 src/pages/shares/ShareForm.vue：SMB/NFS 共享创建/编辑表单（name、path、只读、允许客户端等），CONFLICT 错误在表单内联显示"共享名称已存在（CONFLICT）"
-- [ ] T094 [P] [US5] 创建 src/pages/shares/SmbUserManager.vue：用户列表、创建用户（username + password `type="password"`）、修改密码，密码字段不回显，提交后清除密码 state
+- [X] T088 [US5] 创建 src/api/smb.ts：`listShares`、`createShare`（POST /smb/shares）、`updateShare`（PUT /smb/shares/{name}）、`deleteShare`（DELETE /smb/shares/{name}）、`listUsers`（GET /smb/users）、`createUser`（POST /smb/users）、`updateUserPassword`（PUT /smb/users/{username}/password）、`deleteUser`（DELETE /smb/users/{username}）
+- [X] T089 [P] [US5] 创建 src/api/nfs.ts：`listExports`、`createExport`（POST /nfs/exports）、`updateExport`（PUT /nfs/exports/{name}）、`deleteExport`（DELETE /nfs/exports/{name}）
+- [X] T090 [P] [US5] 创建 src/pages/shares/SharesPage.vue：SMB/NFS 两标签布局，各自独立加载，加载中显示 SkeletonList，空时显示 EmptyState
+- [X] T091 [P] [US5] 创建 src/pages/shares/SmbShareList.vue：名称、路径、启用状态（StatusBadge）、只读/读写标记，含编辑/删除 action
+- [X] T092 [P] [US5] 创建 src/pages/shares/NfsExportList.vue：导出名称、路径、客户端配置、启用状态，含编辑/删除 action
+- [X] T093 [US5] 创建 src/pages/shares/ShareForm.vue：SMB/NFS 共享创建/编辑表单（name、path、只读、允许客户端等），CONFLICT 错误在表单内联显示"共享名称已存在（CONFLICT）"
+- [X] T094 [P] [US5] 创建 src/pages/shares/SmbUserManager.vue：用户列表、创建用户（username + password `type="password"`）、修改密码，密码字段不回显，提交后清除密码 state
 
 **Checkpoint**：US1~US5 均可独立工作，共享管理功能完整。
 
@@ -236,20 +236,20 @@
 
 - [ ] T095 [P] [US6] 编写集成测试：网络接口列表加载，接口卡片显示名称/MAC/IP/MTU/状态 在 tests/integration/network.spec.ts
 - [ ] T096 [P] [US6] 编写集成测试：viewer/operator 角色 up/down/dhcp 按钮禁用；admin 角色点击触发 ConfirmDialog 且确认文本含"可能导致当前连接中断" 在 tests/integration/network.spec.ts
-- [ ] T097 [P] [US6] 编写单元测试：ACL 条目格式正则 `^[ugom]:[^:]*:[rwx-]{3}$`，正例/反例全覆盖 在 tests/unit/acl-validation.test.ts
+- [X] T097 [P] [US6] 编写单元测试：ACL 条目格式正则 `^[ugom]:[^:]*:[rwx-]{3}$`，正例/反例全覆盖 在 tests/unit/acl-validation.test.ts
 - [ ] T098 [P] [US6] 编写集成测试：ACL 查询（GET /acl?path=）和设置（PUT /acl），getfacl 无结果时显示空列表附注说明 在 tests/integration/acl.spec.ts
 - [ ] T099 [P] [US6] 编写 E2E 测试：以 admin 角色查看网络接口→尝试 down 操作→确认→收到操作结果提示 在 tests/e2e/us6-network-acl.spec.ts
 
 ### 用户故事 6 实现
 
-- [ ] T100 [US6] 创建 src/api/network.ts：`listInterfaces`（GET /network/interfaces）、`getInterface`（GET /network/interfaces/{name}）、`updateInterface`（PUT /network/interfaces/{name}，传 action: up/down/dhcp）
-- [ ] T101 [P] [US6] 创建 src/api/acl.ts：`getAcl`（GET /acl?path=）、`setAcl`（PUT /acl，AclInfo body）
-- [ ] T102 [P] [US6] 创建 src/pages/network/NetworkPage.vue：接口卡片网格布局，加载中显示 SkeletonList，空时显示 EmptyState
-- [ ] T103 [P] [US6] 创建 src/pages/network/NetworkInterfaceCard.vue：接口名、MAC、IP 列表、MTU、StatusBadge（up=绿/down=红），up/down/dhcp 操作按钮
-- [ ] T104 [US6] 在 NetworkInterfaceCard 中实现 up/down/dhcp：useRole.isAdmin 守卫（非 admin 禁用鼠标悬停提示"需要 admin 角色"），useConfirm（"[up/down/dhcp] 接口 [name] 可能导致当前连接中断，确认执行？"），执行后刷新卡片
+- [X] T100 [US6] 创建 src/api/network.ts：`listInterfaces`（GET /network/interfaces）、`getInterface`（GET /network/interfaces/{name}）、`updateInterface`（PUT /network/interfaces/{name}，传 action: up/down/dhcp）
+- [X] T101 [P] [US6] 创建 src/api/acl.ts：`getAcl`（GET /acl?path=）、`setAcl`（PUT /acl，AclInfo body）
+- [X] T102 [P] [US6] 创建 src/pages/network/NetworkPage.vue：接口卡片网格布局，加载中显示 SkeletonList，空时显示 EmptyState
+- [X] T103 [P] [US6] 创建 src/pages/network/NetworkInterfaceCard.vue：接口名、MAC、IP 列表、MTU、StatusBadge（up=绿/down=红），up/down/dhcp 操作按钮
+- [X] T104 [US6] 在 NetworkInterfaceCard 中实现 up/down/dhcp：useRole.isAdmin 守卫（非 admin 禁用鼠标悬停提示"需要 admin 角色"），useConfirm（"[up/down/dhcp] 接口 [name] 可能导致当前连接中断，确认执行？"），执行后刷新卡片
 
-- [ ] T105 [P] [US6] 创建 src/pages/acl/AclPage.vue：路径输入框 + 查询按钮，展示 owner/group/UNIX 权限位/ACL 条目列表，新增条目输入区
-- [ ] T106 [US6] 在 AclPage 中实现 ACL 条目格式校验：输入框失焦和提交时验证 `^[ugom]:[^:]*:[rwx-]{3}$`，格式错误时行内显示"格式错误，示例：u:alice:rwx"，阻止提交
+- [X] T105 [P] [US6] 创建 src/pages/acl/AclPage.vue：路径输入框 + 查询按钮，展示 owner/group/UNIX 权限位/ACL 条目列表，新增条目输入区
+- [X] T106 [US6] 在 AclPage 中实现 ACL 条目格式校验：输入框失焦和提交时验证 `^[ugom]:[^:]*:[rwx-]{3}$`，格式错误时行内显示"格式错误，示例：u:alice:rwx"，阻止提交
 
 **Checkpoint**：US1~US6 均可独立工作，网络与 ACL 功能完整；admin 角色守卫行为验证通过。
 
@@ -269,11 +269,11 @@
 
 ### 用户故事 7 实现
 
-- [ ] T110 [US7] 扩展 src/pages/settings/SettingsPage.vue：添加 Agent 列表管理区域，引入 AgentCard 列表和"添加 Agent"按钮，复用 AgentForm（带新增模式）
-- [ ] T111 [P] [US7] 创建 src/components/agent/AgentCard.vue：主机名标签、地址、StatusBadge（在线/离线）、编辑/删除操作按钮
-- [ ] T112 [P] [US7] 创建 src/components/agent/AgentSwitcher.vue：TopBar 下拉选择器，列出所有已配置 agent + 状态，`@change` 触发 store.setActiveAgent
-- [ ] T113 [US7] 在 src/stores/agents.ts 中实现 `setActiveAgent`：取消当前 agent 的所有 pending Axios 请求（使用 AbortController），清除 UI store 的残留数据，更新 activeAgentId
-- [ ] T114 [P] [US7] 将 AgentSwitcher 接入 src/components/layout/TopBar.vue；agent 切换后触发 router.replace('/dashboard') 强制刷新仪表板数据
+- [X] T110 [US7] 扩展 src/pages/settings/SettingsPage.vue：添加 Agent 列表管理区域，引入 AgentCard 列表和"添加 Agent"按钮，复用 AgentForm（带新增模式）
+- [X] T111 [P] [US7] 创建 src/components/agent/AgentCard.vue：主机名标签、地址、StatusBadge（在线/离线）、编辑/删除操作按钮
+- [X] T112 [P] [US7] 创建 src/components/agent/AgentSwitcher.vue：TopBar 下拉选择器，列出所有已配置 agent + 状态，`@change` 触发 store.setActiveAgent
+- [X] T113 [US7] 在 src/stores/agents.ts 中实现 `setActiveAgent`：取消当前 agent 的所有 pending Axios 请求（使用 AbortController），清除 UI store 的残留数据，更新 activeAgentId
+- [X] T114 [P] [US7] 将 AgentSwitcher 接入 src/components/layout/TopBar.vue；agent 切换后触发 router.replace('/dashboard') 强制刷新仪表板数据
 
 **Checkpoint**：全部 7 个用户故事均可独立工作，多 Agent 切换功能完整，上下文隔离验证通过。
 
@@ -283,14 +283,14 @@
 
 **目标**：跨功能质量收尾、覆盖率达标验证、Bundle 体积检查、安全审查、quickstart 验证。
 
-- [ ] T115 [P] 审查并补全 src/api/client.ts 错误码中文映射表：确保 UNAUTHORIZED/FORBIDDEN/NOT_FOUND/INVALID_INPUT/CONFLICT/INTERNAL 全部有对应中文提示，100% SC-005 合规
-- [ ] T116 [P] ConfirmDialog.vue 键盘无障碍：Escape 键关闭对话框（取消），Enter 键触发确认按钮，`role="dialog"` + `aria-modal="true"` + `aria-labelledby` 属性
+- [X] T115 [P] 审查并补全 src/api/client.ts 错误码中文映射表：确保 UNAUTHORIZED/FORBIDDEN/NOT_FOUND/INVALID_INPUT/CONFLICT/INTERNAL 全部有对应中文提示，100% SC-005 合规
+- [X] T116 [P] ConfirmDialog.vue 键盘无障碍：Escape 键关闭对话框（取消），Enter 键触发确认按钮，`role="dialog"` + `aria-modal="true"` + `aria-labelledby` 属性
 - [ ] T117 运行 `npm run coverage`，确认全局覆盖率 ≥ 80%、src/api/ 覆盖率 ≥ 90%；补写缺失测试至达标
-- [ ] T118 [P] 运行 `node scripts/check-bundle-size.js`，确认 gzip 后初始 Bundle ≤ 300KB；若超出分析 bundle 并调整动态 import
+- [X] T118 [P] 运行 `node scripts/check-bundle-size.js`，确认 gzip 后初始 Bundle ≤ 300KB；若超出分析 bundle 并调整动态 import
 - [ ] T119 运行 `npx playwright test`，确认全部 E2E 测试通过（US1~US7 主流程 + 危险操作确认）；修复任何失败用例
 - [ ] T120 [P] CIFS 凭据安全审查（SC-007）：在 MountForm 中添加 CIFS 挂载，打开 devtools Network/Console/Application 标签，确认密码字段不出现在任何输出中
 - [ ] T121 [P] 按照 quickstart.md 从零执行完整开发环境搭建流程，验证文档准确性，更新与实际不符的命令或配置
-- [ ] T122 [P] 更新 README.md：添加项目简介、技术栈徽章、快速开始链接（指向 quickstart.md）
+- [X] T122 [P] 更新 README.md：添加项目简介、技术栈徽章、快速开始链接（指向 quickstart.md）
 
 **Checkpoint（最终）**：所有覆盖率门禁通过，Bundle 体积合规，E2E 测试全绿，安全审查无问题，文档与代码一致。
 

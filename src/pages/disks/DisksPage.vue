@@ -334,7 +334,7 @@ async function showSmartHealth(deviceName: string) {
   if (!apiClient.value) return
   try {
     smartData.value = await getSmartHealth(apiClient.value, deviceName)
-  } catch (err) {
+  } catch {
     smartError.value = '设备未支持 SMART 查询'
   } finally {
     smartLoading.value = false

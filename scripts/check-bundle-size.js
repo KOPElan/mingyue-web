@@ -16,7 +16,7 @@ function getFileSize(filePath) {
   try {
     const stats = statSync(filePath)
     return stats.size
-  } catch (error) {
+  } catch {
     console.error(`无法读取文件: ${filePath}`)
     return 0
   }

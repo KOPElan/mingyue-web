@@ -301,7 +301,7 @@ async function handleFileClick(file: FileEntry) {
   try {
     const res = await readFile(apiClient.value, file.path)
     fileContent.value = decodeBase64(res.content)
-  } catch (err) {
+  } catch {
     fileContent.value = '无法读取文件内容'
   } finally {
     previewLoading.value = false

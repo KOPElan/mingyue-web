@@ -3,7 +3,7 @@
  * 测试 Bearer Token 注入、错误码中文映射、MingyueApiError 实例化
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import axios from 'axios'
 import { createMingyueClient, MingyueApiError } from '@/api/client'
 
@@ -15,7 +15,7 @@ vi.mock('axios', async (importOriginal) => {
     default: {
       ...original.default,
       create: vi.fn(() => {
-        const instance: any = {
+        const instance: Record<string, unknown> = {
           interceptors: {
             request: { use: vi.fn() },
             response: { use: vi.fn() },

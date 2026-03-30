@@ -18,6 +18,8 @@
 <script setup lang="ts">
 import { h } from 'vue'
 
+defineOptions({ name: 'AppSidebar' })
+
 const menuItems = [
   {
     path: '/dashboard',

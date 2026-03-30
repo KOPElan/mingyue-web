@@ -360,7 +360,7 @@ async function loadSmbUsers() {
   usersLoading.value = true
   try {
     smbUsers.value = await getSmbUsers(apiClient.value)
-  } catch (_e) {
+  } catch {
     /* ignore */
   } finally {
     usersLoading.value = false

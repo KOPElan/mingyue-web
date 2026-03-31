@@ -4,6 +4,7 @@
 
 import type { AxiosInstance } from 'axios'
 import type { DiskDevice, MountPoint, MountRequest, SmartHealth, DiskPowerStatus } from '@/types'
+import { encodeMountPath } from '@/utils/encoding'
 
 /**
  * 获取磁盘设备列表
@@ -32,7 +33,7 @@ export async function mountDevice(client: AxiosInstance, request: MountRequest):
  * 卸载设备
  */
 export async function unmountDevice(client: AxiosInstance, mountpoint: string): Promise<void> {
-  const encodedPath = encodeURIComponent(mountpoint)
+  const encodedPath = encodeMountPath(mountpoint)
   await client.delete(`/disks/mounts/${encodedPath}`)
 }
 

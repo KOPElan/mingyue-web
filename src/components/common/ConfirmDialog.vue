@@ -10,12 +10,12 @@
           class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4"
           role="dialog"
           aria-modal="true"
-          :aria-labelledby="`confirm-title-${options.title}`"
+          :aria-labelledby="dialogTitleId"
         >
           <!-- 头部 -->
           <div class="px-6 py-4 border-b">
             <h3
-              :id="`confirm-title-${options.title}`"
+              :id="dialogTitleId"
               class="text-lg font-semibold text-gray-900"
             >
               {{ options.title }}
@@ -62,9 +62,13 @@
 
 <script setup lang="ts">
 import { useConfirm } from '@/composables/useConfirm'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 const { isOpen, options, handleConfirm, handleCancel } = useConfirm()
+
+// 使用稳定唯一 ID，避免 title 含空格/特殊字符导致无效 ID
+let idCounter = 0
+const dialogTitleId = ref(`confirm-dialog-title-${++idCounter}`)
 
 // 键盘事件处理
 function handleKeydown(e: KeyboardEvent) {

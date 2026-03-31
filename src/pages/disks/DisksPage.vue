@@ -141,106 +141,23 @@
     </div>
 
     <!-- SMART 健康面板 -->
-    <div
+    <SmartHealthPanel
       v-if="smartDevice"
-      class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-      @click.self="smartDevice = null"
-    >
-      <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-bold">SMART 健康 - {{ smartDevice }}</h2>
-          <button type="button" @click="smartDevice = null" class="text-gray-400 hover:text-gray-600">✕</button>
-        </div>
-        <div v-if="smartLoading" class="py-4">
-          <SkeletonList :count="4" />
-        </div>
-        <div v-else-if="smartData">
-          <div v-if="!smartData.healthy && smartData.powerOnHours === undefined" class="text-gray-500 text-sm">
-            设备未支持 SMART 查询
-          </div>
-          <div v-else class="space-y-3">
-            <div class="flex justify-between">
-              <span class="text-gray-600">健康状态</span>
-              <span :class="smartData.healthy ? 'text-green-600 font-medium' : 'text-red-600 font-medium'">
-                {{ smartData.healthy ? '健康' : '异常' }}
-              </span>
-            </div>
-            <div v-if="smartData.temperature !== undefined" class="flex justify-between">
-              <span class="text-gray-600">温度</span>
-              <span>{{ smartData.temperature }}°C</span>
-            </div>
-            <div v-if="smartData.powerOnHours !== undefined" class="flex justify-between">
-              <span class="text-gray-600">通电时间</span>
-              <span>{{ smartData.powerOnHours.toLocaleString() }} 小时</span>
-            </div>
-          </div>
-        </div>
-        <div v-else-if="smartError" class="text-red-600 text-sm">{{ smartError }}</div>
-      </div>
-    </div>
+      :device="smartDevice"
+      :loading="smartLoading"
+      :data="smartData"
+      :error="smartError"
+      @close="smartDevice = null"
+    />
 
     <!-- 新建挂载表单 -->
-    <div
+    <MountForm
       v-if="showMountForm"
-      class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-      @click.self="showMountForm = false"
-    >
-      <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-bold">新建挂载</h2>
-          <button type="button" @click="showMountForm = false" class="text-gray-400 hover:text-gray-600">✕</button>
-        </div>
-        <form @submit.prevent="handleMount" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">挂载类型</label>
-            <select v-model="mountForm.fstype" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <option value="ext4">本地 (ext4)</option>
-              <option value="xfs">本地 (xfs)</option>
-              <option value="btrfs">本地 (btrfs)</option>
-              <option value="ntfs">本地 (ntfs)</option>
-              <option value="vfat">本地 (vfat)</option>
-              <option value="cifs">CIFS / Samba</option>
-              <option value="nfs">NFS</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">源设备/路径</label>
-            <input v-model="mountForm.device" type="text" required
-              :placeholder="mountForm.fstype === 'cifs' ? '//server/share' : mountForm.fstype === 'nfs' ? 'server:/export' : '/dev/sdX'"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">挂载目标路径</label>
-            <input v-model="mountForm.mountpoint" type="text" required placeholder="/mnt/data"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <!-- CIFS 专用字段 -->
-          <template v-if="mountForm.fstype === 'cifs'">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
-              <input v-model="mountForm.username" type="text"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">密码</label>
-              <input v-model="mountForm.password" type="password"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-          </template>
-          <div v-if="mountError" class="text-red-600 text-sm">{{ mountError }}</div>
-          <div class="flex justify-end gap-3">
-            <button type="button" @click="showMountForm = false" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">取消</button>
-            <button type="submit" :disabled="mountLoading" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50">
-              {{ mountLoading ? '挂载中...' : '确认挂载' }}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+      :loading="mountLoading"
+      :error="mountError"
+      @close="showMountForm = false"
+      @submit="handleMount"
+    />
   </div>
 </template>
 
@@ -253,6 +170,8 @@ import { useUiStore } from '@/stores/ui'
 import { getDiskDevices, getMountPoints, mountDevice, unmountDevice, getSmartHealth } from '@/api/disks'
 import SkeletonList from '@/components/common/SkeletonList.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
+import SmartHealthPanel from './SmartHealthPanel.vue'
+import MountForm from './MountForm.vue'
 import type { DiskDevice, MountPoint, SmartHealth } from '@/types'
 
 const { apiClient } = useAgent()
@@ -260,39 +179,29 @@ const { canWrite } = useRole()
 const { confirm } = useConfirm()
 const uiStore = useUiStore()
 
-// 标签页
 const tabs = [
   { id: 'devices', label: '块设备' },
   { id: 'mounts', label: '挂载点' },
 ]
 const activeTab = ref('devices')
 
-// 数据
 const devices = ref<DiskDevice[]>([])
 const mounts = ref<MountPoint[]>([])
 const loading = ref(false)
 const devicesError = ref<string | null>(null)
 const mountsError = ref<string | null>(null)
 
-// SMART
+// SMART 面板状态
 const smartDevice = ref<string | null>(null)
 const smartData = ref<SmartHealth | null>(null)
 const smartLoading = ref(false)
 const smartError = ref<string | null>(null)
 
-// 挂载表单
+// 挂载表单状态
 const showMountForm = ref(false)
 const mountLoading = ref(false)
 const mountError = ref<string | null>(null)
-const mountForm = ref({
-  device: '',
-  mountpoint: '',
-  fstype: 'ext4',
-  username: '',
-  password: '',
-})
 
-// 格式化字节
 function formatBytes(bytes: number): string {
   if (bytes === 0) return '0 B'
   const units = ['B', 'KB', 'MB', 'GB', 'TB']
@@ -327,11 +236,15 @@ async function refreshAll() {
 }
 
 async function showSmartHealth(deviceName: string) {
+  // 判空提前到设置 loading 之前，避免弹窗永久显示加载中
+  if (!apiClient.value) {
+    uiStore.error('未配置 Agent，无法查询 SMART 信息')
+    return
+  }
   smartDevice.value = deviceName
   smartData.value = null
   smartError.value = null
   smartLoading.value = true
-  if (!apiClient.value) return
   try {
     smartData.value = await getSmartHealth(apiClient.value, deviceName)
   } catch {
@@ -359,29 +272,17 @@ async function handleUnmount(mountpoint: string) {
   }
 }
 
-async function handleMount() {
+async function handleMount(req: { device: string; mountpoint: string; fstype: string; username?: string; password?: string }) {
   if (!apiClient.value) return
   mountLoading.value = true
   mountError.value = null
-  const req = {
-    device: mountForm.value.device,
-    mountpoint: mountForm.value.mountpoint,
-    fstype: mountForm.value.fstype,
-    username: mountForm.value.username || undefined,
-    password: mountForm.value.password || undefined,
-  }
   try {
     await mountDevice(apiClient.value, req)
-    // 立即清除 CIFS 凭据
-    mountForm.value.password = ''
-    mountForm.value.username = ''
     uiStore.success('挂载成功')
     showMountForm.value = false
     await loadMounts()
   } catch (err) {
     mountError.value = err instanceof Error ? err.message : '挂载失败'
-    // 清除密码
-    mountForm.value.password = ''
   } finally {
     mountLoading.value = false
   }
@@ -393,4 +294,5 @@ onMounted(async () => {
   loading.value = false
 })
 </script>
+
 

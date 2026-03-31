@@ -12,11 +12,9 @@
           <StatusBadge
             :status="health?.status === 'online' ? 'online' : 'offline'"
           />
-          {isActive && (
-            <span class="text-xs px-2 py-1 bg-indigo-600 text-white rounded">
-              当前活动
-            </span>
-          )}
+          <span v-if="isActive" class="text-xs px-2 py-1 bg-indigo-600 text-white rounded">
+            当前活动
+          </span>
         </div>
         <div class="space-y-1 text-sm text-gray-600">
           <p>

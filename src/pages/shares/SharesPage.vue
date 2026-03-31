@@ -26,25 +26,14 @@
     <!-- SMB 共享 -->
     <div v-if="activeTab === 'smb'">
       <div class="flex justify-end mb-4 gap-3">
-        <button
-          type="button"
-          @click="activeTab = 'smb-users'"
+        <button type="button" @click="activeTab = 'smb-users'"
           class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-md hover:bg-indigo-50"
-        >
-          管理 Samba 用户
-        </button>
-        <button
-          v-if="canWrite"
-          type="button"
+        >管理 Samba 用户</button>
+        <button v-if="canWrite" type="button" @click="openSmbForm(null)"
           class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-          @click="openSmbForm(null)"
-        >
-          创建 Samba 共享
-        </button>
+        >创建 Samba 共享</button>
       </div>
-      <div v-if="smbLoading" class="bg-white rounded-lg shadow-md p-6">
-        <SkeletonList :count="3" />
-      </div>
+      <div v-if="smbLoading" class="bg-white rounded-lg shadow-md p-6"><SkeletonList :count="3" /></div>
       <div v-else-if="smbError" class="bg-red-50 rounded-lg p-4 text-red-800">{{ smbError }}</div>
       <div v-else-if="smbShares.length === 0" class="bg-white rounded-lg shadow-md p-8">
         <EmptyState title="暂无 Samba 共享" description="" />
@@ -65,9 +54,7 @@
               <td class="px-6 py-4 font-medium text-sm text-gray-900">{{ share.name }}</td>
               <td class="px-6 py-4 font-mono text-sm text-gray-600">{{ share.path }}</td>
               <td class="px-6 py-4 text-sm">
-                <span :class="share.readonly ? 'text-yellow-600' : 'text-green-600'">
-                  {{ share.readonly ? '只读' : '读写' }}
-                </span>
+                <span :class="share.readonly ? 'text-yellow-600' : 'text-green-600'">{{ share.readonly ? '只读' : '读写' }}</span>
               </td>
               <td class="px-6 py-4 text-sm text-gray-600">{{ share.guestOk ? '允许' : '禁止' }}</td>
               <td class="px-6 py-4 text-sm flex gap-3">
@@ -83,18 +70,11 @@
     <!-- NFS 导出 -->
     <div v-if="activeTab === 'nfs'">
       <div class="flex justify-end mb-4">
-        <button
-          v-if="canWrite"
-          type="button"
+        <button v-if="canWrite" type="button" @click="openNfsForm(null)"
           class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-          @click="openNfsForm(null)"
-        >
-          创建 NFS 导出
-        </button>
+        >创建 NFS 导出</button>
       </div>
-      <div v-if="nfsLoading" class="bg-white rounded-lg shadow-md p-6">
-        <SkeletonList :count="3" />
-      </div>
+      <div v-if="nfsLoading" class="bg-white rounded-lg shadow-md p-6"><SkeletonList :count="3" /></div>
       <div v-else-if="nfsError" class="bg-red-50 rounded-lg p-4 text-red-800">{{ nfsError }}</div>
       <div v-else-if="nfsExports.length === 0" class="bg-white rounded-lg shadow-md p-8">
         <EmptyState title="暂无 NFS 导出" description="" />
@@ -113,9 +93,7 @@
             <tr v-for="exp in nfsExports" :key="exp.name">
               <td class="px-6 py-4 font-medium text-sm text-gray-900">{{ exp.name }}</td>
               <td class="px-6 py-4 font-mono text-sm text-gray-600">{{ exp.path }}</td>
-              <td class="px-6 py-4 text-sm text-gray-600">
-                {{ exp.clients.map(c => c.host).join(', ') || '*' }}
-              </td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ exp.clients.map(c => c.host).join(', ') || '*' }}</td>
               <td class="px-6 py-4 text-sm flex gap-3">
                 <button v-if="canWrite" type="button" class="text-indigo-600 hover:text-indigo-800" @click="openNfsForm(exp)">编辑</button>
                 <button v-if="canWrite" type="button" class="text-red-600 hover:text-red-800" @click="handleDeleteNfs(exp.name)">删除</button>
@@ -129,18 +107,11 @@
     <!-- Samba 用户管理 -->
     <div v-if="activeTab === 'smb-users'">
       <div class="flex justify-end mb-4">
-        <button
-          v-if="canWrite"
-          type="button"
+        <button v-if="canWrite" type="button" @click="openUserForm()"
           class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-          @click="openUserForm()"
-        >
-          创建 Samba 用户
-        </button>
+        >创建 Samba 用户</button>
       </div>
-      <div v-if="usersLoading" class="bg-white rounded-lg shadow-md p-6">
-        <SkeletonList :count="3" />
-      </div>
+      <div v-if="usersLoading" class="bg-white rounded-lg shadow-md p-6"><SkeletonList :count="3" /></div>
       <div v-else-if="smbUsers.length === 0" class="bg-white rounded-lg shadow-md p-8">
         <EmptyState title="暂无 Samba 用户" description="" />
       </div>
@@ -157,9 +128,7 @@
             <tr v-for="user in smbUsers" :key="user.username">
               <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ user.username }}</td>
               <td class="px-6 py-4 text-sm">
-                <span :class="user.enabled ? 'text-green-600' : 'text-red-600'">
-                  {{ user.enabled ? '启用' : '禁用' }}
-                </span>
+                <span :class="user.enabled ? 'text-green-600' : 'text-red-600'">{{ user.enabled ? '启用' : '禁用' }}</span>
               </td>
               <td class="px-6 py-4 text-sm flex gap-3">
                 <button v-if="canWrite" type="button" class="text-indigo-600 hover:text-indigo-800" @click="openChangePassword(user.username)">修改密码</button>
@@ -171,104 +140,27 @@
       </div>
     </div>
 
-    <!-- SMB 共享表单模态框 -->
-    <div v-if="showSmbForm" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" @click.self="showSmbForm = false">
-      <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6">
-        <h2 class="text-lg font-bold mb-4">{{ editingSmb ? '编辑' : '创建' }} Samba 共享</h2>
-        <form @submit.prevent="submitSmbForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">共享名称</label>
-            <input v-model="smbForm.name" type="text" required :readonly="!!editingSmb"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">本地路径</label>
-            <input v-model="smbForm.path" type="text" required placeholder="/data/share"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <div class="flex items-center gap-6">
-            <label class="flex items-center gap-2 text-sm text-gray-700">
-              <input v-model="smbForm.readonly" type="checkbox" class="rounded" />
-              只读
-            </label>
-            <label class="flex items-center gap-2 text-sm text-gray-700">
-              <input v-model="smbForm.guestOk" type="checkbox" class="rounded" />
-              允许来宾
-            </label>
-            <label class="flex items-center gap-2 text-sm text-gray-700">
-              <input v-model="smbForm.browseable" type="checkbox" class="rounded" />
-              可浏览
-            </label>
-          </div>
-          <div v-if="smbFormError" class="text-red-600 text-sm">{{ smbFormError }}</div>
-          <div class="flex justify-end gap-3">
-            <button type="button" @click="showSmbForm = false" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700">取消</button>
-            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">确认</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- NFS 导出表单模态框 -->
-    <div v-if="showNfsForm" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" @click.self="showNfsForm = false">
-      <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6">
-        <h2 class="text-lg font-bold mb-4">{{ editingNfs ? '编辑' : '创建' }} NFS 导出</h2>
-        <form @submit.prevent="submitNfsForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">导出名称</label>
-            <input v-model="nfsForm.name" type="text" required :readonly="!!editingNfs"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">本地路径</label>
-            <input v-model="nfsForm.path" type="text" required placeholder="/data/nfs"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">允许客户端（每行一个，例：192.168.1.0/24 rw,sync）</label>
-            <textarea v-model="nfsClientsText" rows="3"
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono text-sm"
-              placeholder="* rw,sync,no_root_squash"
-            ></textarea>
-          </div>
-          <div v-if="nfsFormError" class="text-red-600 text-sm">{{ nfsFormError }}</div>
-          <div class="flex justify-end gap-3">
-            <button type="button" @click="showNfsForm = false" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700">取消</button>
-            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">确认</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- 创建/修改密码 Samba 用户 -->
-    <div v-if="showUserForm" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" @click.self="showUserForm = false">
-      <div class="bg-white rounded-lg shadow-xl max-w-sm w-full p-6">
-        <h2 class="text-lg font-bold mb-4">{{ changingPasswordUser ? '修改密码' : '创建 Samba 用户' }}</h2>
-        <form @submit.prevent="submitUserForm" class="space-y-4">
-          <div v-if="!changingPasswordUser">
-            <label class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
-            <input v-model="userForm.username" type="text" required
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">密码</label>
-            <input v-model="userForm.password" type="password" required
-              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              autocomplete="new-password"
-            />
-          </div>
-          <div class="flex justify-end gap-3">
-            <button type="button" @click="showUserForm = false" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700">取消</button>
-            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">确认</button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <!-- 模态框：使用拆分出的子组件 -->
+    <SmbShareForm
+      v-if="showSmbForm"
+      :initial="editingSmbShare"
+      :error="smbFormError"
+      @close="showSmbForm = false"
+      @submit="submitSmbForm"
+    />
+    <NfsExportForm
+      v-if="showNfsForm"
+      :initial="editingNfsExport"
+      :error="nfsFormError"
+      @close="showNfsForm = false"
+      @submit="submitNfsForm"
+    />
+    <SmbUserForm
+      v-if="showUserForm"
+      :username="changingPasswordUser"
+      @close="showUserForm = false"
+      @submit="submitUserForm"
+    />
   </div>
 </template>
 
@@ -285,6 +177,9 @@ import {
 import { getNfsExports, createNfsExport, updateNfsExport, deleteNfsExport } from '@/api/nfs'
 import SkeletonList from '@/components/common/SkeletonList.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
+import SmbShareForm from './SmbShareForm.vue'
+import NfsExportForm from './NfsExportForm.vue'
+import SmbUserForm from './SmbUserForm.vue'
 import type { SmbShare, SmbUser, NfsExport } from '@/types'
 
 const { apiClient } = useAgent()
@@ -299,37 +194,28 @@ const tabs = [
 ]
 const activeTab = ref('smb')
 
-// SMB 数据
 const smbShares = ref<SmbShare[]>([])
 const smbLoading = ref(false)
 const smbError = ref<string | null>(null)
 
-// NFS 数据
 const nfsExports = ref<NfsExport[]>([])
 const nfsLoading = ref(false)
 const nfsError = ref<string | null>(null)
 
-// 用户数据
 const smbUsers = ref<SmbUser[]>([])
 const usersLoading = ref(false)
 
-// SMB 表单
+// 表单可见性与编辑状态
 const showSmbForm = ref(false)
-const editingSmb = ref<string | null>(null)
+const editingSmbShare = ref<SmbShare | null>(null)
 const smbFormError = ref<string | null>(null)
-const smbForm = ref({ name: '', path: '', readonly: false, guestOk: false, browseable: true })
 
-// NFS 表单
 const showNfsForm = ref(false)
-const editingNfs = ref<string | null>(null)
+const editingNfsExport = ref<NfsExport | null>(null)
 const nfsFormError = ref<string | null>(null)
-const nfsForm = ref({ name: '', path: '' })
-const nfsClientsText = ref('')
 
-// 用户表单
 const showUserForm = ref(false)
 const changingPasswordUser = ref<string | null>(null)
-const userForm = ref({ username: '', password: '' })
 
 async function loadSmbShares() {
   if (!apiClient.value) return
@@ -368,33 +254,21 @@ async function loadSmbUsers() {
 }
 
 function openSmbForm(share: SmbShare | null) {
-  editingSmb.value = share?.name ?? null
+  editingSmbShare.value = share
   smbFormError.value = null
-  if (share) {
-    smbForm.value = { name: share.name, path: share.path, readonly: share.readonly, guestOk: share.guestOk, browseable: share.browseable }
-  } else {
-    smbForm.value = { name: '', path: '', readonly: false, guestOk: false, browseable: true }
-  }
   showSmbForm.value = true
 }
 
-async function submitSmbForm() {
+async function submitSmbForm(form: SmbShare) {
   if (!apiClient.value) return
   smbFormError.value = null
   try {
-    const payload: SmbShare = {
-      name: smbForm.value.name,
-      path: smbForm.value.path,
-      readonly: smbForm.value.readonly,
-      guestOk: smbForm.value.guestOk,
-      browseable: smbForm.value.browseable,
-    }
-    if (editingSmb.value) {
-      await updateSmbShare(apiClient.value, editingSmb.value, payload)
+    if (editingSmbShare.value) {
+      await updateSmbShare(apiClient.value, editingSmbShare.value.name, form)
     } else {
-      await createSmbShare(apiClient.value, payload)
+      await createSmbShare(apiClient.value, form)
     }
-    uiStore.success(editingSmb.value ? '共享已更新' : '共享已创建')
+    uiStore.success(editingSmbShare.value ? '共享已更新' : '共享已创建')
     showSmbForm.value = false
     await loadSmbShares()
   } catch (e) {
@@ -421,37 +295,21 @@ async function handleDeleteSmb(name: string) {
 }
 
 function openNfsForm(exp: NfsExport | null) {
-  editingNfs.value = exp?.name ?? null
+  editingNfsExport.value = exp
   nfsFormError.value = null
-  if (exp) {
-    nfsForm.value = { name: exp.name, path: exp.path }
-    nfsClientsText.value = exp.clients.map(c => `${c.host} ${Array.isArray(c.options) ? c.options.join(',') : c.options}`).join('\n')
-  } else {
-    nfsForm.value = { name: '', path: '' }
-    nfsClientsText.value = ''
-  }
   showNfsForm.value = true
 }
 
-async function submitNfsForm() {
+async function submitNfsForm(form: NfsExport) {
   if (!apiClient.value) return
   nfsFormError.value = null
-  const clients = nfsClientsText.value.split('\n').filter(l => l.trim()).map(line => {
-    const parts = line.trim().split(/\s+/)
-    return { host: parts[0] ?? '*', options: (parts[1] ?? 'rw,sync').split(',') }
-  })
-  const payload: NfsExport = {
-    name: nfsForm.value.name,
-    path: nfsForm.value.path,
-    clients,
-  }
   try {
-    if (editingNfs.value) {
-      await updateNfsExport(apiClient.value, editingNfs.value, payload)
+    if (editingNfsExport.value) {
+      await updateNfsExport(apiClient.value, editingNfsExport.value.name, form)
     } else {
-      await createNfsExport(apiClient.value, payload)
+      await createNfsExport(apiClient.value, form)
     }
-    uiStore.success(editingNfs.value ? '导出已更新' : '导出已创建')
+    uiStore.success(editingNfsExport.value ? '导出已更新' : '导出已创建')
     showNfsForm.value = false
     await loadNfsExports()
   } catch (e) {
@@ -479,33 +337,28 @@ async function handleDeleteNfs(name: string) {
 
 function openUserForm() {
   changingPasswordUser.value = null
-  userForm.value = { username: '', password: '' }
   showUserForm.value = true
 }
 
 function openChangePassword(username: string) {
   changingPasswordUser.value = username
-  userForm.value = { username, password: '' }
   showUserForm.value = true
 }
 
-async function submitUserForm() {
+async function submitUserForm(payload: { username: string; password: string }) {
   if (!apiClient.value) return
   try {
     if (changingPasswordUser.value) {
-      await updateSmbUserPassword(apiClient.value, changingPasswordUser.value, { password: userForm.value.password })
+      await updateSmbUserPassword(apiClient.value, changingPasswordUser.value, { password: payload.password })
       uiStore.success('密码已修改')
     } else {
-      await createSmbUser(apiClient.value, userForm.value.username, userForm.value.password)
+      await createSmbUser(apiClient.value, payload.username, payload.password)
       uiStore.success('用户已创建')
     }
-    // 立即清除密码 state
-    userForm.value.password = ''
     showUserForm.value = false
     await loadSmbUsers()
   } catch (e) {
     uiStore.error(e instanceof Error ? e.message : '操作失败')
-    userForm.value.password = ''
   }
 }
 
@@ -531,4 +384,3 @@ onMounted(async () => {
   await Promise.all([loadSmbShares(), loadNfsExports(), loadSmbUsers()])
 })
 </script>
-

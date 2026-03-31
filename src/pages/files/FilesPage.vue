@@ -30,6 +30,7 @@
             :node="node"
             :selected-path="currentPath"
             @select="selectDirectory"
+            @toggle="toggleTreeNode"
           />
         </div>
       </div>
@@ -149,6 +150,7 @@ import { decodeBase64, encodeBase64 } from '@/utils/base64'
 import { FILE_PREVIEW_LIMIT } from '@/utils/constants'
 import SkeletonList from '@/components/common/SkeletonList.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
+import DirectoryTreeNode from './DirectoryTreeNode.vue'
 import type { FileEntry } from '@/types'
 
 // 目录树节点类型
@@ -175,44 +177,9 @@ const canPreview = ref(false)
 const saveLoading = ref(false)
 const treeLoading = ref(false)
 
-// 简单目录树
 const treeNodes = ref<TreeNode[]>([
   { name: '/', path: '/', children: [], expanded: true },
 ])
-
-// 目录树节点组件（内联递归）
-const DirectoryTreeNode = {
-  name: 'DirectoryTreeNode',
-  props: {
-    node: Object as () => TreeNode,
-    selectedPath: String,
-  },
-  emits: ['select'],
-  template: `
-    <div>
-      <div
-        class="flex items-center gap-1 px-3 py-1.5 cursor-pointer hover:bg-gray-100 text-sm"
-        :class="selectedPath === node.path ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-700'"
-        :style="{ paddingLeft: (node.path.split('/').length - 1) * 12 + 12 + 'px' }"
-        @click="$emit('select', node.path)"
-      >
-        <span class="w-4 text-gray-400" @click.stop="node.expanded = !node.expanded">
-          {{ node.children.length > 0 ? (node.expanded ? '▼' : '▶') : '　' }}
-        </span>
-        <span>📁 {{ node.name === '/' ? '/ (根目录)' : node.name }}</span>
-      </div>
-      <template v-if="node.expanded">
-        <DirectoryTreeNode
-          v-for="child in node.children"
-          :key="child.path"
-          :node="child"
-          :selected-path="selectedPath"
-          @select="$emit('select', $event)"
-        />
-      </template>
-    </div>
-  `,
-}
 
 function formatBytes(bytes: number): string {
   if (bytes === 0) return '0 B'
@@ -226,8 +193,7 @@ function formatDate(isoStr: string): string {
 }
 
 function formatMode(mode: number): string {
-  const oct = mode.toString(8).padStart(4, '0')
-  return oct
+  return mode.toString(8).padStart(4, '0')
 }
 
 function getFileIcon(name: string): string {
@@ -245,7 +211,6 @@ async function selectDirectory(path: string) {
   currentPath.value = path
   selectedFile.value = null
   await loadFiles(path)
-  // 更新树节点
   updateTreeNode(path)
 }
 
@@ -263,7 +228,6 @@ async function loadFiles(path: string) {
 }
 
 function updateTreeNode(path: string) {
-  // 简单实现：展开路径并添加子目录节点
   const dirs = files.value.filter(f => f.isDir)
   addToTree(treeNodes.value, path, dirs)
 }
@@ -284,6 +248,20 @@ function addToTree(nodes: TreeNode[], parentPath: string, children: FileEntry[])
   }
 }
 
+function toggleTreeNode(path: string) {
+  setNodeExpanded(treeNodes.value, path)
+}
+
+function setNodeExpanded(nodes: TreeNode[], path: string) {
+  for (const node of nodes) {
+    if (node.path === path) {
+      node.expanded = !node.expanded
+      return
+    }
+    setNodeExpanded(node.children, path)
+  }
+}
+
 async function handleFileClick(file: FileEntry) {
   if (file.isDir) {
     await selectDirectory(file.path)
@@ -291,13 +269,15 @@ async function handleFileClick(file: FileEntry) {
   }
   selectedFile.value = file
   fileContent.value = ''
-  previewLoading.value = true
   canPreview.value = file.size <= FILE_PREVIEW_LIMIT
-  if (!canPreview.value) {
-    previewLoading.value = false
-    return
-  }
+
+  // 文件过大：不需要请求，直接显示提示
+  if (!canPreview.value) return
+
+  // 判空提前到 loading 设置之前，避免 loading 卡住
   if (!apiClient.value) return
+
+  previewLoading.value = true
   try {
     const res = await readFile(apiClient.value, file.path)
     fileContent.value = decodeBase64(res.content)
@@ -343,7 +323,6 @@ async function handleDelete(file: FileEntry) {
   }
 }
 
-// 拖拽移动
 const dragSource = ref<FileEntry | null>(null)
 
 function handleDragStart(e: DragEvent, file: FileEntry) {
@@ -375,4 +354,5 @@ onMounted(async () => {
   updateTreeNode('/')
 })
 </script>
+
 

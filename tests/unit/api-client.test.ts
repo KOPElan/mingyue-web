@@ -10,25 +10,24 @@ import { createMingyueClient, MingyueApiError } from '@/api/client'
 // Mock axios
 vi.mock('axios', async (importOriginal) => {
   const original = await importOriginal<typeof axios>()
+  const mockCreate = vi.fn(() => {
+    const instance: Record<string, unknown> = {
+      interceptors: {
+        request: { use: vi.fn() },
+        response: { use: vi.fn() },
+      },
+      get: vi.fn(),
+      post: vi.fn(),
+      put: vi.fn(),
+      delete: vi.fn(),
+      defaults: { headers: {} },
+    }
+    return instance
+  })
   return {
     ...original,
-    default: {
-      ...original.default,
-      create: vi.fn(() => {
-        const instance: Record<string, unknown> = {
-          interceptors: {
-            request: { use: vi.fn() },
-            response: { use: vi.fn() },
-          },
-          get: vi.fn(),
-          post: vi.fn(),
-          put: vi.fn(),
-          delete: vi.fn(),
-          defaults: { headers: {} },
-        }
-        return instance
-      }),
-    },
+    default: { ...original, create: mockCreate },
+    create: mockCreate,
   }
 })
 

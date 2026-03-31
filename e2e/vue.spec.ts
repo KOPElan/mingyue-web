@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test'
 
-// See here how to get started:
-// https://playwright.dev/docs/intro
-test('visits the app root url', async ({ page }) => {
+// 测试应用根路由重定向到仪表板
+test('访问根路径重定向到仪表板', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('h1')).toHaveText('You did it!')
+  await expect(page).toHaveURL(/\/dashboard|\/settings/)
 })
